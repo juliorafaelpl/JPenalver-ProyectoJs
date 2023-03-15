@@ -1,3 +1,5 @@
+//ecommerce
+
 //Determinamos hora actual del sistema para emitir el saludo correcto
 const today = new Date()
 const curHr = today.getHours()
@@ -10,40 +12,50 @@ if (curHr >= 6 && curHr < 13) {
     alert('Buenas Noches, Bienvenidos a Dark Kitchen!')
 }
 
-//CLASE A SER UTILIZADA PARA LA CONSTRUCCIÓN DE PRODUCTOS
+//CLASE PRODUCTOS
 
 class Producto {
-    constructor(categoria, nombre, precio, disponible) {
+    constructor(categoria, nombre, precio, existencia) {
         this.categoria = categoria
         this.nombre = nombre
         this.precio = precio
-        this.disponible = disponible
+        this.existencia = existencia
     }
-
 }
+// creamos  productos
+const hamburguesa = new Producto('hamburguesa', 'American Burger', 2100, 20)
+const bebida = new Producto('bebida', 'Agua Aquarius 500ml', 380, 20)
+const helado = new Producto('helado', '1/4 de Helado KitKat Ice Cream', 700, 10)
 
-//CREACIÓN DE LOS PRODUCTOS DE LA TIENDA
-const producto1 = new Producto('hamburguesa', 'Combo Hamburguesa', 2200, 10)
-const producto2 = new Producto('bebidas', 'aguas', 200, 5)
-const producto3 = new Producto('helados', 'KitKat', 900, 20)
-console.log(producto1)
-console.log(producto2)
-console.log(producto3)
+
+// ARRAY  (LISTA DE PRODUCTOS)
+const productos = [hamburguesa, bebida, helado]
+console.log(productos)
 
 //FUNCIÓN PAGAR
-function pagar(){
+function pagar() {
     const medioDePago = prompt('Elige el medio de pago de tu preferencia: Tipea L para pago en el local ó T para pago en línea con tarjeta de débito o crédito').toLowerCase()
-    if (medioDePago ==='t'){
-        alert('a continuación serás re-dirigido a nuestro portal de pago')
+    //si el cliente pagase con medios electrónicos
+    if (medioDePago === 't') {
+        if (curHr >9 && curHr < 22) {
+            alert('a continuación serás re-dirigido a nuestro portal de pago')
         console.log('el cliente ha pagado en línea. Preparar pedido para envío a domcilio')
-    } else if (medioDePago ==='l'){
-        const horaDeRetiro =parseInt(prompt('indícanos la hora de retiro, para tener lista tu orden en formato militar'))
-        console.log('el cliente ha elegido retirar en el local a las '+horaDeRetiro)
-        if (horaDeRetiro>curHr && horaDeRetiro<=22){
-            alert ('tu orden ha sido agendada para ser retirada a las '+horaDeRetiro+ ' horas')
-        }  else {
-            alert('Ingresa una hora válida. Recuerda, nuestro horario laboral es de 9-22 hrs')
+        alert('GRACIAS POR PREFERIR EN DARK KITCHEN')
+        } else {
+            alert('En estos momentos, no podemos procesar tu orden. Recuerda que nuestro horario laboral es de 9-22hrs')
         }
+      // si el cliente programa para retirar en el local  
+    } else if (medioDePago === 'l') {
+        const horaDeRetiro = parseInt(prompt('indícanos la hora de retiro, para tener lista tu orden en formato militar'))
+        if (horaDeRetiro > curHr && horaDeRetiro <= 22) {
+            alert('tu orden ha sido agendada para ser retirada a las ' + horaDeRetiro + ' horas')
+            console.log('el cliente ha elegido retirar en el local a las ' + horaDeRetiro)
+            alert('GRACIAS POR PREFERIR EN DARK KITCHEN')
+        } else {
+            alert('En estos momentos, no podemos procesar tu orden. Recuerda que nuestro horario laboral es de 9-22hrs')
+        }
+
+        // no indica un medio válido de pago
     } else {
         alert('indica un medio de pago válido')
     }
@@ -52,64 +64,67 @@ function pagar(){
 
 //PROCESO DE COMPRA
 
-    const producto = prompt('qué producto deseas adquirir').toLocaleLowerCase()
+//creación de carrito de compras
+const carrito = []
 
-    //COMPRA DE 1 PRODUCTO BASADA EN CONDICIONALES
-    
-    if (producto === 'hamburguesa') {
-        //requerimiento del cliente
-        const qHamburguesa = parseInt(prompt('Cuántas ' + producto1.nombre + ' deseas adquirir?'))
-        //si no hay disponible
-        if (producto1.disponible < qHamburguesa) {
-            alert('No Disponible. Por favor selecciona una cantidad menor')
+//elección de producto por parte del usuario
+let productoEscogido = prompt(
+    'Escoge el producto que deseas comprar: hamburguesa-bebida-helado'
+).toLowerCase()
+// variable para condicion del ciclo
+let seguirComprando = true
+
+//ciclo de compra
+while (seguirComprando === true) {
+    // buscar el producto escogido
+    const producto = productos.find(
+        (producto) => producto.categoria === productoEscogido
+    )
+    // guardar producto en carrito o preguntarle al usuario un producto existente
+    if (producto) {
+        //determinación de existencia del producto seleccionado
+        const disponible = producto.existencia
+        //se puede atender la cantidad solciitada del producto?
+        const cantidadReq = (parseInt(prompt('Indica la cantidad que deseas comprar')))
+        if ((cantidadReq) > (disponible)) {
+            alert('elige una cantidad menor de producto')
         } else {
-            //si hay disponible?
-            if (qHamburguesa >= 1 && qHamburguesa <= producto1.disponible) {
-                console.log('la orden consta de ' +qHamburguesa, producto1.nombre)
-                //confirma la cantidad de producto solicitado
-                alert('Has agregado a tu orden la cantidad de ' + qHamburguesa + ' ' + producto1.nombre)
-                // calcula el precio para esa cantidad de producto
-                aPagar = qHamburguesa * (parseInt(producto1.precio))
-                // indica al usuario el costo de su orden
-                alert ('Tu orden de '+qHamburguesa+' '+producto1.nombre+ ' tiene un valor de $'+aPagar)
-                // función de pago o retiro en local
-                pagar()      
-            } else {
-                alert('no indicaste una cantidad de ' + producto1.nombre)
-            }
-    
+            alert('Has agregado la cantidad de ' + cantidadReq + ' de' + ' ' + producto.nombre)
         }
-    } else if (producto === 'bebidas') {
-        const qBebidas = parseInt(prompt('Cuántas ' + producto2.nombre + ' deseas adquirir?'))
-        if (producto2.disponible < qBebidas) {
-            alert('No Disponible. Por favor selecciona una cantidad menor')
-        } else {
-            if (qBebidas >= 1 && qBebidas <= producto2.disponible) {
-                console.log('la orden consta de ' +qBebidas, producto2.nombre)
-                alert('Has agregado a tu orden la cantidad de ' + qBebidas + ' ' + producto2.nombre)
-                aPagar = qBebidas * (parseInt(producto2.precio))
-                alert ('Tu orden de '+qBebidas+' '+producto2.nombre+ ' tiene un valor de $'+aPagar)
-                pagar()
-            } else {
-                alert('no indicaste una cantidad de ' + producto2.nombre)
-            }
-        }
-    } else if (producto === 'helados') {
-        const qHelados = parseInt(prompt('Cuántas ' + producto3.nombre + ' deseas adquirir?'))
-        if (producto3.disponible < qHelados) {
-            alert('No Disponible. Por favor selecciona una cantidad menor')
-        } else {
-            if (qHelados >= 1 && qHelados <= producto3.disponible) {
-                console.log('la orden consta de ' +qHelados, producto3.nombre)
-                alert('Has agregado a tu orden la cantidad de ' + qHelados + ' ' + producto3.nombre)
-                aPagar = qHelados * (parseInt(producto3.precio))
-                alert ('Tu orden de '+qHelados+' '+producto3.nombre+ ' tiene un valor de $'+aPagar)
-                pagar()
-                
-            } else {
-                alert('no indicaste una cantidad de ' + producto3.nombre)
-            }
-        }
+        producto.requerido = cantidadReq
+        //sumar al carrito el producto seleccionado, chequeada su disponibilidad en inventario
+        carrito.push(producto)
     } else {
-        alert('Elige un Producto válido')
+        productoEscogido = prompt(
+            'Escoge un producto correcto: hamburguesa-bebida-helado'
+        )
+        continue
     }
+    //opción agregar otro item a su orden
+    const decision = prompt('Deseas seguir comprando? si-no')
+    if (decision === 'si') {
+        productoEscogido = prompt(
+            'Escoge el producto que deseas comprar: hamburguesa-bebida-helado'
+        )
+        // condición pra fin del ciclo
+    } else {
+        seguirComprando = false
+    }
+}
+
+
+//LLAMADA A CARRITO DE COMPRAS
+console.log(carrito);
+//valor inicial
+let totalCompra = 0
+//cálculo del Valor Total de la orden, considerando Cantidad de Productos seleccionados y precios
+carrito.forEach(producto => {
+    subtotal = (producto.precio) * (producto.requerido)
+    totalCompra = totalCompra + subtotal
+})
+alert('El total de tu compra es: ' + totalCompra + ' pesos')
+
+//llamada a la función pagar
+pagar()
+
+

@@ -1,41 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link al CSS -->
+    <!-- Link CSS Icon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Link CSS del Proyecto -->
     <link rel="stylesheet" href="css/main.css">
-    <title>ESHOP</title>
+    <title>Dark Kitchen</title>
 </head>
+
 <body>
-    <main>
-        <div class="title">
-            <h1>Simulador de compra para Dark Kitchen</h1>
-        </div>
-        
-        <div class="texto">
-            <h2>Instrucciones</h2>
-            <p>El simulador permitirá elegir uno de estos tres productos:</p>
-            <ul>
-                <li>Hamburguesa</li>
-                <li>Bebidas</li>
-                <li>Helados</li>
-            </ul>
-            <span><strong>Importante:</strong> Cuando el simulador solicite el producto, utiliza cualquiera de esos tres</span>
-            <p>Una vez selecciones el producto, te pedirá cantidad y evaluará disponibilidad; te brindará costo; y te solicitará medio de pago para terminar la transacción.</p>
-        </div>
+    <header id="title">
+        <h1>Dark Kitchen</h1>
+    </header>
 
+    <section id="contenedor">
 
+        <section id="menu">
+            <nav>
+                <ul>
+                    <li>Hamburguesa</li>
+                    <li>Agua</li>
+                    <li>Helado</li>
+                    <li>Carrito</li>
+                </ul>
+            </nav>
+        </section>
 
-    </main>
+        <h2> Productos</h2>
+        <main id="productos">
+            <div class="card">
+                <div class="card__picture">
+                    <img src="img/american-burger.jpg" alt="hamburguesa-americana">
+                </div>
+                <div class="card__info">
+                    <h3>American Burger</h3>
+                    <p>Peraparada con nuestra carne especial de res o pollo, cebolla caramelizada, queso, pepinillos,
+                        panceta y salsas</p>
+                    <a href="#"><img src="" alt=""></a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card__picture">
+                    <img src="img/aquarius.jpg" alt="agua-saborizada-aquarius">
+                </div>
+                <div class="card__info">
+                    <h3>Agua Aquarius</h3>
+                    <p>Agua saborizada de ananá, limón, manzana, pomelo, pera o uva.</p>
+                    <a href="#"><img src="" alt=""></a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card__picture">
+                    <img src="img/kitkat.jpg" alt="helado-kitkat">
+                </div>
+                <div class="card__info">
+                    <h3>Helado KitKat</h3>
+                    <p>1/4Kg de Helado con base de Stracciatella, trozos de kitkat bañados en dulce de leche y sirope de
+                        chocolate</p>
+                    <a href="#"><img src="" alt=""></a>
+                </div>
+            </div>
+        </main>
 
-    <footer>
-        Desarrollado por Julio Rafael Peñalver Leal
-    </footer>
-    
+        <section id="cart">
+            <h2>Carrito de Compras</h2>
+
+            <box-icon name='cart-add' size="lg"></box-icon>
+
+        </section>
+
+        <footer id="pie">
+            <p>Desarrollado por Julio Peñalver </p>
+            <a href="https://github.com/juliorafaelpl" target="_blank">Visita mi Portafolio</a>
+        </footer>
+    </section>
+    <!-- Script Icon -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <!-- Script al JavaScript del Proyecto -->
     <script src="index.js">
-        
+
     </script>
 </body>
+
 </html>
